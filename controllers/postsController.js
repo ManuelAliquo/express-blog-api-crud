@@ -1,3 +1,4 @@
+// array import
 const postsList = require("../data/postsList.js");
 
 function index(req, res) {
