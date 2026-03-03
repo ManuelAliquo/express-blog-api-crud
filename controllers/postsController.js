@@ -3,12 +3,24 @@ const postsList = require("../data/postsList.js");
 
 // index (get)
 function index(req, res) {
-  const responseData = {
-    result: postsList,
-    success: true,
-  };
+  let filteredPosts = postsList;
 
-  res.status(200).json(responseData);
+  if (req.query.tag) {
+    filteredPosts = postsList.filter((post) => post.tags.includes(req.query.tag));
+  }
+
+  if (filteredPosts.length === 0) {
+    return res.json({
+      result: [],
+      success: true,
+      message: "Nessun post trovato",
+    });
+  }
+
+  res.json({
+    result: filteredPosts,
+    success: true,
+  });
 }
 
 // show (get:id)
