@@ -47,11 +47,21 @@ function show(req, res) {
 
 // store (post)
 function store(req, res) {
-  console.log(req.body);
+  const posts = [...postsList];
+
+  const newId = posts[posts.length - 1].id + 1;
+
+  const newPost = {
+    id: newId,
+    title: req.body.title,
+    content: req.body.content,
+    image: req.body.image,
+    tags: req.body.tags,
+  };
 
   res.status(201);
   return res.json({
-    result: "Creato nuovo post",
+    result: newPost,
     success: true,
   });
 }
