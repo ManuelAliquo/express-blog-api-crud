@@ -95,8 +95,7 @@ function update(req, res) {
 
   res.status(200);
   res.json({
-    result: postsList,
-    updated: postToUpdate,
+    result: postToUpdate,
     message: `Modifica integrale del post ${req.params.id}`,
     success: true,
   });
@@ -118,8 +117,17 @@ function modify(req, res) {
     });
   }
 
+  const { title, content, image, tags } = req.body;
+
+  if (title !== undefined) postToModify.title = title;
+  if (content !== undefined) postToModify.content = content;
+  if (image !== undefined) postToModify.image = image;
+  if (tags !== undefined) postToModify.tags = tags;
+
+  res.status(200);
   res.json({
-    result: `Modifica parziale del post ${req.params.id}`,
+    result: postToModify,
+    message: `Modifica parziale del post ${req.params.id}`,
     success: true,
   });
 }
