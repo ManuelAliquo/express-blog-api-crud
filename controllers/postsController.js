@@ -17,6 +17,7 @@ function index(req, res) {
     });
   }
 
+  res.status(200);
   res.json({
     result: filteredPosts,
     success: true,
@@ -59,20 +60,27 @@ function store(req, res) {
     tags: req.body.tags,
   };
 
+  postsList.push(newPost);
+
+  console.log(postsList);
+
   res.status(201);
   return res.json({
     result: newPost,
+    message: "Creato nuovo post",
     success: true,
   });
 }
 
 // update (put:id)
 function update(req, res) {
+  const posts = [...postsList];
+
   const postId = parseInt(req.params.id);
 
-  const post = postsList.find((post) => post.id === postId);
+  const postToUpdate = posts.find((post) => post.id === postId);
 
-  if (!post) {
+  if (!postToUpdate) {
     res.status(404);
     return res.json({
       error: "Not Found",
@@ -80,19 +88,29 @@ function update(req, res) {
     });
   }
 
+  postToUpdate.title = req.body.title;
+  postToUpdate.content = req.body.content;
+  postToUpdate.image = req.body.image;
+  postToUpdate.tags = req.body.tags;
+
+  res.status(200);
   res.json({
-    result: `Modifica integrale del post ${req.params.id}`,
+    result: postsList,
+    updated: postToUpdate,
+    message: `Modifica integrale del post ${req.params.id}`,
     success: true,
   });
 }
 
 // modify (patch:id)
 function modify(req, res) {
+  const posts = [...postsList];
+
   const postId = parseInt(req.params.id);
 
-  const post = postsList.find((post) => post.id === postId);
+  const postToModify = posts.find((post) => post.id === postId);
 
-  if (!post) {
+  if (!postToModify) {
     res.status(404);
     return res.json({
       error: "Not Found",
