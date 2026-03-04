@@ -25,9 +25,9 @@ function index(req, res) {
 
 // show (get:id)
 function show(req, res) {
-  const id = parseInt(req.params.id);
+  const postId = parseInt(req.params.id);
 
-  const post = postsList.find((post) => post.id === id);
+  const post = postsList.find((post) => post.id === postId);
 
   if (!post) {
     res.status(404);
@@ -47,14 +47,20 @@ function show(req, res) {
 
 // store (post)
 function store(req, res) {
-  res.send("Creazione nuovo post");
+  console.log(req.body);
+
+  res.status(201);
+  return res.json({
+    result: "Creato nuovo post",
+    success: true,
+  });
 }
 
 // update (put:id)
 function update(req, res) {
-  const id = parseInt(req.params.id);
+  const postId = parseInt(req.params.id);
 
-  const post = postsList.find((post) => post.id === id);
+  const post = postsList.find((post) => post.id === postId);
 
   if (!post) {
     res.status(404);
@@ -64,14 +70,17 @@ function update(req, res) {
     });
   }
 
-  res.send(`Modifica integrale del post ${req.params.id}`);
+  res.json({
+    result: `Modifica integrale del post ${req.params.id}`,
+    success: true,
+  });
 }
 
 // modify (patch:id)
 function modify(req, res) {
-  const id = parseInt(req.params.id);
+  const postId = parseInt(req.params.id);
 
-  const post = postsList.find((post) => post.id === id);
+  const post = postsList.find((post) => post.id === postId);
 
   if (!post) {
     res.status(404);
@@ -81,14 +90,17 @@ function modify(req, res) {
     });
   }
 
-  res.send(`Modifica parziale del post ${req.params.id}`);
+  res.json({
+    result: `Modifica parziale del post ${req.params.id}`,
+    success: true,
+  });
 }
 
 // destroy (delete:id)
 function destroy(req, res) {
-  const id = parseInt(req.params.id);
+  const postId = parseInt(req.params.id);
 
-  const post = postsList.find((post) => post.id === id);
+  const post = postsList.find((post) => post.id === postId);
 
   if (!post) {
     res.status(404);

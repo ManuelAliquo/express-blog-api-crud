@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const appUrl = `http://localhost:${port}/`;
-// router import
+
 const postsRouter = require("./routers/posts.js");
 
+app.use(express.json());
 app.use("/posts", postsRouter);
 
 app.listen(port, () => {
