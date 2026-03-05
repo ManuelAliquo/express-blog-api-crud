@@ -9,14 +9,13 @@ function index(req, res) {
 
   if (filteredPosts.length === 0)
     return res.json({
-      result: [],
       success: true,
       message: "Nessun post trovato",
     });
 
   res.status(200).json({
-    result: filteredPosts,
     success: true,
+    result: filteredPosts,
   });
 }
 
@@ -32,19 +31,15 @@ function show(req, res) {
       message: "Post non trovato",
     });
 
-  const responseData = {
-    result: post,
+  res.status(200).json({
     success: true,
-  };
-
-  res.status(200).json(responseData);
+    result: post,
+  });
 }
 
 // store (post)
 function store(req, res) {
   const posts = [...postsList];
-
-  a = b;
 
   const newId = posts[posts.length - 1].id + 1;
 
@@ -134,8 +129,6 @@ function destroy(req, res) {
     });
 
   postsList.splice(postsList.indexOf(post), 1);
-
-  console.log(postsList);
 
   res.sendStatus(204);
 }
