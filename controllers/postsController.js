@@ -5,20 +5,16 @@ const postsList = require("../data/postsList.js");
 function index(req, res) {
   let filteredPosts = postsList;
 
-  if (req.query.tag) {
-    filteredPosts = postsList.filter((post) => post.tags.includes(req.query.tag));
-  }
+  if (req.query.tag) filteredPosts = postsList.filter((post) => post.tags.includes(req.query.tag));
 
-  if (filteredPosts.length === 0) {
+  if (filteredPosts.length === 0)
     return res.json({
       result: [],
       success: true,
       message: "Nessun post trovato",
     });
-  }
 
-  res.status(200);
-  res.json({
+  res.status(200).json({
     result: filteredPosts,
     success: true,
   });
@@ -30,13 +26,11 @@ function show(req, res) {
 
   const post = postsList.find((post) => post.id === postId);
 
-  if (!post) {
-    res.status(404);
-    return res.json({
+  if (!post)
+    return res.status(404).json({
       error: "Not Found",
       message: "Post non trovato",
     });
-  }
 
   const responseData = {
     result: post,
@@ -49,6 +43,8 @@ function show(req, res) {
 // store (post)
 function store(req, res) {
   const posts = [...postsList];
+
+  a = b;
 
   const newId = posts[posts.length - 1].id + 1;
 
@@ -64,11 +60,10 @@ function store(req, res) {
 
   console.log(postsList);
 
-  res.status(201);
-  return res.json({
-    result: newPost,
-    message: "Creato nuovo post",
+  res.status(201).json({
     success: true,
+    message: "Creato nuovo post",
+    result: newPost,
   });
 }
 
@@ -80,24 +75,21 @@ function update(req, res) {
 
   const postToUpdate = posts.find((post) => post.id === postId);
 
-  if (!postToUpdate) {
-    res.status(404);
-    return res.json({
+  if (!postToUpdate)
+    return res.status(404).json({
       error: "Not Found",
       message: "Post non trovato",
     });
-  }
 
   postToUpdate.title = req.body.title;
   postToUpdate.content = req.body.content;
   postToUpdate.image = req.body.image;
   postToUpdate.tags = req.body.tags;
 
-  res.status(200);
-  res.json({
-    result: postToUpdate,
-    message: `Modifica integrale del post ${req.params.id}`,
+  res.status(200).json({
     success: true,
+    message: `Modifica integrale del post ${req.params.id}`,
+    result: postToUpdate,
   });
 }
 
@@ -109,13 +101,11 @@ function modify(req, res) {
 
   const postToModify = posts.find((post) => post.id === postId);
 
-  if (!postToModify) {
-    res.status(404);
-    return res.json({
-      error: "Not Found",
+  if (!postToModify)
+    return res.status(404).json({
+      success: false,
       message: "Post non trovato",
     });
-  }
 
   const { title, content, image, tags } = req.body;
 
@@ -124,11 +114,10 @@ function modify(req, res) {
   if (image !== undefined) postToModify.image = image;
   if (tags !== undefined) postToModify.tags = tags;
 
-  res.status(200);
-  res.json({
-    result: postToModify,
-    message: `Modifica parziale del post ${req.params.id}`,
+  res.status(200).json({
     success: true,
+    message: `Modifica parziale del post ${req.params.id}`,
+    result: postToModify,
   });
 }
 
@@ -138,13 +127,11 @@ function destroy(req, res) {
 
   const post = postsList.find((post) => post.id === postId);
 
-  if (!post) {
-    res.status(404);
-    return res.json({
-      error: "Not Found",
+  if (!post)
+    return res.status(404).json({
+      success: false,
       message: "Post non trovato",
     });
-  }
 
   postsList.splice(postsList.indexOf(post), 1);
 
